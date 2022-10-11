@@ -6,28 +6,9 @@ import { AuthService } from "../shared/auth.service";
 @Injectable()
 export class UserService {
 
-    private readonly users: UserDto[] = [
-        {
-            id: "1",
-            firstName: "Dmitry",
-            lastName: "Burlaka",
-            email: "t@t.co",
-            password: "a1",
-            role: "Admin",
-        },
-        {
-            id: "2",
-            firstName: "Katya",
-            lastName: "Denson",
-            email: "k@t.co",
-            password: "a1",
-            role: "Moderator",
-        }
-    ];
+    private readonly users: UserDto[] = [];
 
-    constructor(
-        private readonly auth: AuthService
-    ) {
+    constructor( private readonly auth: AuthService ) {
     }
 
     async create( { firstName, lastName, email, password }: UserDto ): Promise<JWTTokens> {
@@ -35,13 +16,11 @@ export class UserService {
             throw new InternalServerErrorException()
         }
 
-        this.users.push( {
-            id: new Date().getTime().toString(),
-            firstName, lastName, email, password,
-            role: "User"
-        } );
+        const id = new Date().getTime().toString();
 
-        return await this.auth.login( { email, password } );
+        this.users.push( { id, firstName, lastName, email, password, role: "User" } );
+
+        return await this.auth.login( { email, password, id } );
     }
 
     async validate( { email, password }: LoginDto ): Promise<User | null> {

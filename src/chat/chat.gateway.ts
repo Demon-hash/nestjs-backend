@@ -12,7 +12,6 @@ export class ChatGateway {
 
     @SubscribeMessage( 'message' )
     handleMessages( @ConnectedSocket() socket: Socket, @MessageBody() data: ChatMessageDTO ): void {
-        socket.to( data.room ).emit( 'message', data.message );
         this.server.to( data.room ).emit( 'message', data.message );
     }
 

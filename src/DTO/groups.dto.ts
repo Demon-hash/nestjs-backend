@@ -1,5 +1,6 @@
 export interface GroupsDto {
-    id: string;
+    id?: string;
     title: string;
     ico: string;
+    hidden?: boolean;
 }
