@@ -6,7 +6,24 @@ import { AuthService } from "../shared/auth.service";
 @Injectable()
 export class UserService {
 
-    private readonly users: UserDto[] = [];
+    private readonly users: UserDto[] = [
+        {
+            id: "1",
+            firstName: "Dmitry",
+            lastName: "Burlaka",
+            email: "t@t.co",
+            password: "a1",
+            role: "Admin"
+        },
+        {
+            id: "2",
+            firstName: "Katya",
+            lastName: "Denson",
+            email: "k@t.co",
+            password: "a1",
+            role: "User"
+        }
+    ];
 
     constructor( private readonly auth: AuthService ) {
     }

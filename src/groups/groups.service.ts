@@ -9,13 +9,15 @@ export class GroupsService {
 
     private readonly groups: GroupsDto[] = [];
 
-    async getAll(): Promise<GroupsDto[]> {
-        return this.groups;
+    async getAll( id: string | number ): Promise<GroupsDto[]> {
+        const privateGroups = this.groups.filter( group => group.hidden && (group.ownerId == id || group.members?.findIndex( member => member.id == id ) > -1) );
+        const publicGroups = this.groups.filter( group => !group.hidden );
+        return [ ...publicGroups, ...privateGroups ];
     }
 
-    async create({ ico, title, hidden }: GroupsDto): Promise<{id: string}> {
-        const id = `${uuidv1()}`;
-        this.groups.push({ ico, title, hidden, id });
+    async create( { ico, title, hidden, ownerId }: GroupsDto ): Promise<{ id: string }> {
+        const id = `${ uuidv1() }`;
+        this.groups.push( { ico, title, hidden, id, ownerId } );
         return { id };
     }
 }

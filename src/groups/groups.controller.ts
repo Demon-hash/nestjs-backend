@@ -11,7 +11,7 @@ export class GroupsController {
     @UseGuards( JwtAuthGuard )
     @Get()
     async getAll( @Request() req ): Promise<GroupsDto[]> {
-        return await this.groups.getAll();
+        return await this.groups.getAll(req.user);
     }
 
     @UseGuards( JwtAuthGuard )
