@@ -1,18 +1,25 @@
-export type Role = "User" | "Moderator" | "Admin";
+import { ApiProperty } from "@nestjs/swagger";
+import { UserRole } from "~/src/types";
 
-export interface JWTTokens {
-    readonly access_token: string;
-    readonly refresh_token: string;
-}
-
-export interface User {
-   id: string | undefined;
-   firstName: string | undefined;
-   lastName: string | undefined;
-   email: string | undefined;
-   role: Role | undefined;
-}
-
-export interface UserDto extends User {
+export class UserDto {
+    @ApiProperty({
+        required: false
+    })
+    id?: number | undefined;
+    @ApiProperty()
+    firstName?: string | undefined;
+    @ApiProperty()
+    lastName?: string | undefined;
+    @ApiProperty()
+    email?: string | undefined;
+    @ApiProperty({
+        required: false,
+        deprecated: true
+    })
     password: string | undefined;
+    @ApiProperty({
+        enum: UserRole,
+        required: false
+    })
+    role?: UserRole | undefined;
 }

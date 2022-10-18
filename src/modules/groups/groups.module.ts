@@ -1,6 +1,6 @@
 import { Module } from "@nestjs/common";
 import { GroupsController } from "./groups.controller";
-import { JwtStrategy } from "../shared/strategy/jwt.strategy";
+import { JwtStrategy } from "../../shared/strategy/jwt.strategy";
 import { GroupsService } from "./groups.service";
 
 @Module( {

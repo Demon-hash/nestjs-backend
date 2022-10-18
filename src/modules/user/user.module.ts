@@ -4,19 +4,22 @@ import { JwtModule } from "@nestjs/jwt";
 
 import { UserController } from "./user.controller";
 
-import { AuthService } from "../shared/auth.service";
+import { AuthService } from "../../shared/auth.service";
 import { UserService } from "./user.service";
 
-import { JwtStrategy } from "../shared/strategy/jwt.strategy";
-import { LocalStrategy } from "../shared/strategy/local.strategy";
+import { JwtStrategy } from "../../shared/strategy/jwt.strategy";
+import { LocalStrategy } from "../../shared/strategy/local.strategy";
 
-import { JWT_ACCESS_SECRET } from "../consts";
+import { JWT_ACCESS_SECRET } from "../../consts";
+import { TypeOrmModule } from "@nestjs/typeorm";
+import { UserEntity } from "../../entities/user.entity";
 
 @Module( {
     imports: [
-        PassportModule.register({
+        TypeOrmModule.forFeature( [ UserEntity ] ),
+        PassportModule.register( {
             defaultStrategy: "jwt"
-        }),
+        } ),
         JwtModule.register( {
             secret: JWT_ACCESS_SECRET,
             signOptions: {

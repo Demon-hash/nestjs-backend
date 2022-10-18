@@ -1,8 +1,8 @@
 import { Injectable } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
-import { JWTTokens } from "../DTO/user.dto";
-
 import { JWT_REFRESH_SECRET } from "../consts";
+import { JWTTokensDTO } from "~/src/DTO/jwt.dto";
+import { LoginDataDTO } from "~/src/DTO/login-data.dto";
 
 @Injectable()
 export class AuthService {
@@ -10,7 +10,7 @@ export class AuthService {
     constructor( private readonly jwtService: JwtService ) {
     }
 
-    async login( data: any ): Promise<JWTTokens> {
+    async login( data: LoginDataDTO & { id?: number } ): Promise<JWTTokensDTO> {
         const { email, password, id } = data;
         const payload = { email, password, sub: id };
         return {

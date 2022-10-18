@@ -1,4 +1,7 @@
+import { ApiProperty } from "@nestjs/swagger";
+import { LoginDataDTO } from "~/src/DTO/login-data.dto";
+
 export class LoginDto {
-    readonly email: string | undefined;
-    readonly password: string | undefined;
+    @ApiProperty()
+    readonly user: LoginDataDTO;
 }
